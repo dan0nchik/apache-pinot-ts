@@ -1,0 +1,47 @@
+{
+  "schemaName": "companies",
+  "dimensionFieldSpecs": [
+    {
+      "name": "Exchange",
+      "dataType": "STRING"
+    },
+    {
+      "name": "Symbol",
+      "dataType": "STRING"
+    },
+    {
+      "name": "Shortname",
+      "dataType": "STRING"
+    },
+    {
+      "name": "Longname",
+      "dataType": "STRING"
+    },
+    {
+      "name": "Sector",
+      "dataType": "STRING"
+    },
+	{
+      "name": "Industry",
+      "dataType": "STRING"
+    }
+  ],
+  "metricFieldSpecs": [
+    {
+      "name": "Currentprice",
+      "dataType": "FLOAT"
+    },
+    {
+      "name": "Marketcap",
+      "dataType": "LONG"
+    },
+    {
+      "name": "Ebitda",
+      "dataType": "LONG"
+    },
+    {
+      "name": "Revenuegrowth",
+      "dataType": "FLOAT"
+    }
+  ]
+}
