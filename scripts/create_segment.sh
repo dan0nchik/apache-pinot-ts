@@ -3,4 +3,4 @@ docker run --rm -ti \
     -v ~/dev/apache-pinot-ts:/tmp/pinot \
     --name pinot-data-ingestion-job \
     apachepinot/pinot:latest LaunchDataIngestionJob \
-    -jobSpecFile /tmp/pinot/segments/companies-batch-job-spec.yml
+    -jobSpecFile /tmp/pinot/ingestion_configs/companies-batch-job-spec.yml
