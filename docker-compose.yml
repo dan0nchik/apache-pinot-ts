@@ -3,6 +3,8 @@ services:
   pinot-zookeeper:
     image: zookeeper:latest
     container_name: pinot-zookeeper
+    networks:
+      - pinot
     ports:
       - "2181:2181"
     environment:
@@ -12,6 +14,8 @@ services:
     image: wurstmeister/kafka:latest
     hostname: kafka
     container_name: kafka
+    networks:
+      - pinot
     ports:
       - "9092:9092"
     environment:
@@ -25,6 +29,8 @@ services:
     command: "StartController -zkAddress pinot-zookeeper:2181"
     container_name: pinot-controller
     restart: unless-stopped
+    networks:
+      - pinot
     ports:
       - "9000:9000"
     environment:
@@ -36,6 +42,8 @@ services:
     command: "StartBroker -zkAddress pinot-zookeeper:2181"
     restart: unless-stopped
     container_name: "pinot-broker"
+    networks:
+      - pinot
     ports:
       - "8099:8099"
     environment:
@@ -47,9 +55,16 @@ services:
     command: "StartServer -zkAddress pinot-zookeeper:2181"
     restart: unless-stopped
     container_name: "pinot-server"
+    networks:
+      - pinot
     ports:
       - "8098:8098"
     environment:
       JAVA_OPTS: "-Dplugins.dir=/opt/pinot/plugins -Xms4G -Xmx16G -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -Xloggc:gc-pinot-server.log"
     depends_on:
       - pinot-broker
+
+networks:
+  pinot: 
+    name: pinot
+    driver: bridge
