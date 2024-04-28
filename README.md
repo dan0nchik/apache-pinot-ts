@@ -4,6 +4,12 @@
 
 https://docs.pinot.apache.org/
 
+## Architecture
+
+Data Stream -> Apache Kafka -> Apache Pinot
+
+NOTE: server must have 16 GB of RAM!!!
+
 ## Start cluster
 
 ``` 
@@ -45,10 +51,6 @@ docker compose up -d --build
 2. Upload with script
 3. Create segment config
 4. Ingest data via batching with script
-
-## Architecture
-
-Data Stream -> Apache Kafka -> Apache Pinot
 
 ## Useful notes
 
