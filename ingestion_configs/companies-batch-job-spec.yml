@@ -19,7 +19,7 @@ recordReaderSpec:
   configClassName: 'org.apache.pinot.plugin.inputformat.csv.CSVRecordReaderConfig'
 tableSpec:
   tableName: 'companies'
-  schemaURI: 'http://172.18.0.4:9000/tables/companies/schema'
-  tableConfigURI: 'http://172.18.0.4:9000/tables/companies'
+  schemaURI: 'http://172.18.0.2:9000/tables/companies/schema'
+  tableConfigURI: 'http://172.18.0.2:9000/tables/companies'
 pinotClusterSpecs:
-  - controllerURI: 'http://172.18.0.4:9000'
+  - controllerURI: 'http://172.18.0.2:9000'
