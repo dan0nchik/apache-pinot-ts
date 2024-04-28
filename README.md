@@ -44,7 +44,7 @@ docker compose up -d --build
 1. Write schema + config (see docs)
 2. Upload to Pinot with script
 4. Test for ingesting: ```  python3 scripts/kafka_produce.py ``` 
-4. If ok, restart in backgorund:   nohup python3 scripts/kafka_produce.py > ./kafka_ingest.log 2>&1 & ```
+4. If ok, restart in backgorund: ```  nohup python3 scripts/kafka_produce.py > ./kafka_ingest.log 2>&1 & ```
 
 ## Creating OFFLINE Table
 1. Schema + config
