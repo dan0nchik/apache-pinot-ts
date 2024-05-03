@@ -2,18 +2,18 @@
     "schemaName": "events",
     "dimensionFieldSpecs": [
       {
-        "name": "uuid",
+        "name": "symbol",
         "dataType": "STRING"
       }
     ],
     "metricFieldSpecs": [
       {
-        "name": "count",
+        "name": "price",
         "dataType": "INT"
       }
     ],
     "dateTimeFieldSpecs": [{
-      "name": "ts",
+      "name": "timestamp",
       "dataType": "TIMESTAMP",
       "format" : "1:MILLISECONDS:EPOCH",
       "granularity": "1:MILLISECONDS"

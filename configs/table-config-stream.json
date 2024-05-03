@@ -2,7 +2,7 @@
     "tableName": "events",
     "tableType": "REALTIME",
     "segmentsConfig": {
-      "timeColumnName": "ts",
+      "timeColumnName": "timestamp",
       "schemaName": "events",
       "replicasPerPartition": "1"
     },

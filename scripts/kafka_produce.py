@@ -18,8 +18,8 @@ def acked(err, msg):
         print("Message produced: %s" % (str(msg)))
 while True:
     ts = int(datetime.datetime.now().timestamp() * 1000)
-    id = str(uuid.uuid4())
-    count = random.randint(0, 1000)
+    symbol = random.choice(["MSFT", "AAPL", "TSLA", "ABBV"])
+    price = random.randint(0, 1000)
     time.sleep(10)
-    producer.produce(topic, json.dumps({"ts": ts, "uuid": id, "count": count}), callback=acked)
+    producer.produce(topic, json.dumps({"timestamp": ts, "symbol": symbol, "price": price}), callback=acked)
     producer.poll(1)
