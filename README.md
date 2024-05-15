@@ -10,11 +10,26 @@ Data Stream -> Apache Kafka -> Apache Pinot
 
 NOTE: server must have 16 GB of RAM!!!
 
-## Start cluster
+## Starting cluster
 
 ``` 
 docker compose up -d --build
 ```
+
+## Creating REALTIME table with data streaming
+
+1. Write schema + config (see docs) (Name files like: TABLENAME_schema.json and TABLENAME_config.json)
+2. Upload to Pinot with script:
+``` ./scripts/db/upload_schema.sh -n TABLENAME ``` 
+
+## Creating OFFLINE Table
+1. Write schema + config (see docs) (!! Name file like: TABLENAME_schema.json and TABLENAME_config.json)
+2. Upload to Pinot with script:
+``` ./scripts/db/upload_schema.sh -n TABLENAME ``` 
+3. Create segment config
+2. Upload and ingest to Pinot with script:
+``` ./scripts/db/create_segment.sh -n TABLENAME ``` 
+
 ## Structure (**DO NOT CHANGE FOLDER NAMES!**)
 
 ``` 
@@ -38,19 +53,8 @@ docker compose up -d --build
 |   +-- cached segments for offline tables
 |
 .
+
 ``` 
-## Creating REALTIME table
-
-1. Write schema + config (see docs)
-2. Upload to Pinot with script
-4. Test for ingesting: ```  python3 scripts/kafka_produce.py ``` 
-4. If ok, restart in backgorund: ```  nohup python3 scripts/kafka_produce.py > ./kafka_ingest.log 2>&1 & ```
-
-## Creating OFFLINE Table
-1. Schema + config
-2. Upload with script
-3. Create segment config
-4. Ingest data via batching with script
 
 ## Useful notes
 
