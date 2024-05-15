@@ -9,7 +9,7 @@
     "metricFieldSpecs": [
       {
         "name": "price",
-        "dataType": "INT"
+        "dataType": "DOUBLE"
       }
     ],
     "dateTimeFieldSpecs": [{

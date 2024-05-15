@@ -4,3 +4,6 @@ segments
 .env
 *.env
 venv
+.venv
+.vscode
+__pycache__

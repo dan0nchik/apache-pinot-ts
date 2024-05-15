@@ -1,6 +1,6 @@
 docker run --rm -ti \
     --network=pinot\
-    -v $(pwd)/:/tmp/pinot \
+    -v $(pwd)/../..:/tmp/pinot \
     --name pinot-batch-table-creation \
     apachepinot/pinot:latest AddTable \
     -schemaFile /tmp/pinot/schemas/schema-stream.json \

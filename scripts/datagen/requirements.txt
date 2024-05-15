@@ -1,2 +1,4 @@
 confluent-kafka
 python-dotenv
+tinkoff-investments
+pandas
