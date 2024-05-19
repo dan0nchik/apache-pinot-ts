@@ -30,6 +30,7 @@ services:
     image: confluentinc/cp-kafka:latest
     hostname: kafka
     container_name: kafka
+    restart: always
     networks:
       - pinot
     ports:
@@ -89,6 +90,8 @@ services:
     build: ./scripts/datagen
     networks:
       - pinot
+    depends_on:
+      - kafka
 networks:
   pinot: 
     name: pinot

@@ -10,7 +10,11 @@ import socket
 
 conf = {'bootstrap.servers': 'kafka:9092'}
 topic = 'events'
-producer = Producer(conf)
+try:
+    producer = Producer(conf)
+except Exception as e:
+    print("Failed to create producer: %s" % (str(e)))
+    exit(1)
 
 def acked(err, msg):
     if err is not None:
