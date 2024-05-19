@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD ["python", "kafka_produce.py"]
+CMD ["python", "-u", "kafka_produce.py"] # unbuffered output
