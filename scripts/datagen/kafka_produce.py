@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 # Kafka configuration
 conf = {
-    'bootstrap_servers': 'localhost:29092'
+    'bootstrap_servers': 'kafka:9092'
 }
 topic = 'events'
 
