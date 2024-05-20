@@ -126,13 +126,13 @@ services:
       - kafka
       - pinot-zookeeper 
     ports:
-      - "8085:8085"
+      - "8083:8083"
     networks:
       - pinot
     environment:
       CONNECT_BOOTSTRAP_SERVERS: "kafka:9092"
       CONNECT_REST_ADVERTISED_HOST_NAME: "kafka-connect"
-      CONNECT_REST_PORT: 8085
+      CONNECT_REST_PORT: 8083
       CONNECT_GROUP_ID: "quickstart"
       CONNECT_CONFIG_STORAGE_TOPIC: "connect-configs"
       CONNECT_OFFSET_STORAGE_TOPIC: "connect-offsets"
