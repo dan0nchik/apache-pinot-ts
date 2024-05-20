@@ -2,7 +2,7 @@
     "schemaName": "eventsAvg",
     "dimensionFieldSpecs": [
       {
-        "name": "SYMBOL",
+        "name": "symbol",
         "dataType": "STRING"
       }
     ],
@@ -10,10 +10,6 @@
       {
         "name": "AVG_PRICE",
         "dataType": "DOUBLE"
-      },
-      {
-        "name": "WINDOWEND",
-        "dataType": "INT"
       }
     ],
     "dateTimeFieldSpecs": [{
