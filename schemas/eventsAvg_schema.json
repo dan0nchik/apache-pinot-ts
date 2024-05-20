@@ -3,7 +3,7 @@
     "dimensionFieldSpecs": [
       {
         "name": "SYMBOL",
-        "dataType": "VARCHAR"
+        "dataType": "STRING"
       }
     ],
     "metricFieldSpecs": [
