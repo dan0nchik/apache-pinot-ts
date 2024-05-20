@@ -2,7 +2,7 @@
     "tableName": "eventsAvg",
     "tableType": "REALTIME",
     "segmentsConfig": {
-      "timeColumnName": ["WINDOWSTART", "WINDOWEND"],
+      "timeColumnName": "WINDOWSTART",
       "schemaName": "eventsAvg",
       "replicasPerPartition": "1"
     },
