@@ -1,0 +1,27 @@
+{
+    "schemaName": "eventsAvg",
+    "dimensionFieldSpecs": [
+      {
+        "name": "symbol",
+        "dataType": "STRING"
+      }
+    ],
+    "metricFieldSpecs": [
+      {
+        "name": "avg_price",
+        "dataType": "DOUBLE"
+      }
+    ],
+    "dateTimeFieldSpecs": [{
+      "name": "WINDOWSTART",
+      "dataType": "TIMESTAMP",
+      "format" : "1:MILLISECONDS:EPOCH",
+      "granularity": "1:MILLISECONDS"
+    },
+    {
+        "name": "WINDOWEND",
+        "dataType": "TIMESTAMP",
+        "format" : "1:MILLISECONDS:EPOCH",
+        "granularity": "1:MILLISECONDS"
+      }]
+  }
