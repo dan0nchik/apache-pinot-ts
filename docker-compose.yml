@@ -91,6 +91,7 @@ services:
   datagen:
     container_name: datagen
     build: ./scripts/datagen
+    restart: unless-stopped
     networks:
       - pinot
     depends_on:
