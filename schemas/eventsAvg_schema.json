@@ -3,13 +3,17 @@
     "dimensionFieldSpecs": [
       {
         "name": "SYMBOL",
-        "dataType": "STRING"
+        "dataType": "VARCHAR"
       }
     ],
     "metricFieldSpecs": [
       {
         "name": "AVG_PRICE",
         "dataType": "DOUBLE"
+      },
+      {
+        "name": "WINDOWEND",
+        "dataType": "INT"
       }
     ],
     "dateTimeFieldSpecs": [{
@@ -17,11 +21,5 @@
       "dataType": "TIMESTAMP",
       "format" : "1:MILLISECONDS:EPOCH",
       "granularity": "1:MILLISECONDS"
-    },
-    {
-        "name": "WINDOWEND",
-        "dataType": "TIMESTAMP",
-        "format" : "1:MILLISECONDS:EPOCH",
-        "granularity": "1:MILLISECONDS"
-      }]
+    }]
   }
