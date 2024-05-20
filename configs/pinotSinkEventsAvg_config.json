@@ -1,0 +1,15 @@
+{
+    "name": "pinot-sink",
+    "config": {
+      "connector.class": "org.apache.pinot.plugin.stream.kafka.KafkaPinotSink",
+      "tasks.max": "1",
+      "topics": "moving_avg_prices",
+      "pinot.controller.urls": "http://pinot-controller:9000",
+      "pinot.table.name": "eventsAvg",
+      "pinot.schema.name": "eventsAvg",
+      "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+      "value.converter.schemas.enable": false,
+      "key.converter": "org.apache.kafka.connect.storage.StringConverter"
+    }
+  }
+  
