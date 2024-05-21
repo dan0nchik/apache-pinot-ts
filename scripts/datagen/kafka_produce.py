@@ -25,7 +25,7 @@ async def produce_data():
             ts = int(datetime.datetime.now().timestamp() * 1000)
             symbol = TICKER
             close = value[1]
-            message = json.dumps({"timestamp": ts, "symbol": symbol, "price": close})
+            message = json.dumps({"ts": ts, "symbol": symbol, "price": close})
             try:
                 # Send message
                 await producer.send_and_wait(topic, message.encode('utf-8'))

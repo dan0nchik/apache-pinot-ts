@@ -4,7 +4,15 @@
       {
         "name": "SYMBOL",
         "dataType": "STRING"
-      }
+      },
+      {
+        "name": "WINDOW_START",
+        "dataType": "STRING"
+    },
+        {
+            "name": "WINDOW_END",
+            "dataType": "STRING"
+        }
     ],
     "metricFieldSpecs": [
       {

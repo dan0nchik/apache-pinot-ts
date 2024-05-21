@@ -6,7 +6,7 @@ conf = {'bootstrap.servers': 'localhost:29092',
         'group.id': 'my_consumer_group',
         'auto.offset.reset': 'earliest'}
 
-topic = 'moving_avg_prices'
+topic = 'MOVING_AVG_PRICES'
 
 consumer = Consumer(conf)
 consumer.subscribe([topic])
