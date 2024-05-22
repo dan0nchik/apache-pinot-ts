@@ -1,0 +1,6 @@
+{
+  "providers": {
+    "tinkoff": ["SBER", "VTBR", "ASTR"]
+  },
+  "bootstrap_servers": "kafka:9092"
+}

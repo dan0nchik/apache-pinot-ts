@@ -1,5 +1,7 @@
 import asyncio
 import os
+import random
+import time
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -14,11 +16,9 @@ from tinkoff.invest import (
 )
 from fetch_utils import quotation_to_float, get_figi_by_ticker
 TOKEN = os.environ["INVEST_TOKEN"]
-TICKER="SBER"
-LOT, INSTRUMENT_ID = get_figi_by_ticker(TICKER)
-print(LOT, INSTRUMENT_ID)
 
-async def fetch_ticker():
+async def fetch_ticker(TICKER: str):
+    LOT, INSTRUMENT_ID = get_figi_by_ticker(TICKER)
     async def request_iterator():
         yield MarketDataRequest(
             subscribe_candles_request=SubscribeCandlesRequest(
