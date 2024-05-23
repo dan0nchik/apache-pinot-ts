@@ -1,8 +1,8 @@
 import asyncio
 import configparser
-import datetime
+from datetime import datetime
 import json
-from fetch_tinkoff import fetch_ticker
+import fetch_tinkoff, fetch_yahoo
 from aiokafka import AIOKafkaProducer
 import logging
 
@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 # Tickers configuration
 with open("config.json") as f:
     config = json.load(f)
-tickers = config["providers"]["tinkoff"]["tickers"]
-print(tickers)
+tickers_tinkoff = config["providers"]["tinkoff"]["tickers"]
+tickers_yahoo = config["providers"]["yahoo"]["tickers"]
 kafka_conf = {"bootstrap_servers": config["bootstrap_servers"]}
 
 
@@ -24,11 +24,10 @@ async def produce_data():
     await producer.start()
     try:
 
-        async def fetch_job(ticker: str):
-            async for value in fetch_ticker(ticker):
+        async def fetch_job_tinkoff(ticker: str):
+            async for value in fetch_tinkoff.fetch_ticker(ticker):
                 symbol = ticker
                 ts, open, high, low, close, volume = value
-                print("TYUIGKHUJGHJGKGKGKUY", type(ts), ts)
                 message = json.dumps(
                     {
                         "ts": int(ts.timestamp() * 1000),
@@ -50,7 +49,31 @@ async def produce_data():
                 except Exception as e:
                     logger.error(f"Failed to deliver message: {message}: {str(e)}")
 
-        tasks = [fetch_job(ticker) for ticker in tickers]
+        async def fetch_job_yahoo(ticker: str):
+            async for value in fetch_yahoo.fetch_ticker([ticker]):
+                symbol, ts, price, change, day_volume = value
+                message = json.dumps(
+                    {
+                        "ts": ts,
+                        "ts_str": str(datetime.fromtimestamp(ts / 1e3)),
+                        "symbol": symbol,
+                        "price": price,
+                        "change": change,
+                        "day_volume": day_volume,
+                    }
+                )
+                try:
+                    # Send message
+                    await producer.send_and_wait(
+                        topic=ticker, value=message.encode("utf-8")
+                    )
+                    logger.info(f"Message produced: {message}")
+                except Exception as e:
+                    logger.error(f"Failed to deliver message: {message}: {str(e)}")
+
+        tasks = [fetch_job_tinkoff(ticker) for ticker in tickers_tinkoff] + [
+            fetch_job_yahoo(ticker) for ticker in tickers_yahoo
+        ]
         await asyncio.gather(*tasks)
     finally:
         # Ensure all messages are sent before closing

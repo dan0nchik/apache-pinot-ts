@@ -1,6 +1,7 @@
 {
   "providers": {
-    "tinkoff": {"tickers": ["SBER", "VTBR", "ASTR"], "interval": "3m"}
+    "tinkoff": {"tickers": ["SBER", "VTBR", "ASTR"], "interval": "1m"},
+    "yahoo": {"tickers": ["AAPL", "GOOGL", "TSLA"]}
   },
   "bootstrap_servers": "kafka:9092"
 }

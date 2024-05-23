@@ -1,0 +1,35 @@
+{
+  "schemaName": "TEMPLATE",
+  "dimensionFieldSpecs": [
+    {
+      "name": "symbol",
+      "dataType": "STRING"
+    },
+    {
+      "name": "ts_str",
+      "dataType": "STRING"
+    }
+  ],
+  "metricFieldSpecs": [
+    {
+      "name": "price",
+      "dataType": "DOUBLE"
+    },
+    {
+      "name": "change",
+      "dataType": "DOUBLE"
+    },
+    {
+      "name": "day_volume",
+      "dataType": "DOUBLE"
+    }
+  ],
+  "dateTimeFieldSpecs": [
+    {
+      "name": "ts",
+      "dataType": "TIMESTAMP",
+      "format": "1:MILLISECONDS:EPOCH",
+      "granularity": "1:MILLISECONDS"
+    }
+  ]
+}
