@@ -1,3 +1,5 @@
+from datetime import datetime
+import json
 import logging
 import os
 
@@ -14,6 +16,15 @@ TOKEN = os.environ["INVEST_TOKEN"]
 
 logging.basicConfig(format="%(asctime)s %(levelname)s:%(message)s", level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+
+
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, datetime):
+            return o.isoformat()
+
+        return json.JSONEncoder.default(self, o)
+
 
 def quotation_to_float(quotation):
     return quotation.units + quotation.nano / 1_000_000_000

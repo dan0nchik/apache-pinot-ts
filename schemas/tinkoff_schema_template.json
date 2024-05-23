@@ -4,11 +4,31 @@
     {
       "name": "symbol",
       "dataType": "STRING"
+    },
+    {
+      "name": "ts_str",
+      "dataType": "STRING"
     }
   ],
   "metricFieldSpecs": [
     {
-      "name": "price",
+      "name": "open",
+      "dataType": "DOUBLE"
+    },
+    {
+      "name": "high",
+      "dataType": "DOUBLE"
+    },
+    {
+      "name": "low",
+      "dataType": "DOUBLE"
+    },
+    {
+      "name": "close",
+      "dataType": "DOUBLE"
+    },
+    {
+      "name": "volume",
       "dataType": "DOUBLE"
     }
   ],

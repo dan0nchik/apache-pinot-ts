@@ -1,6 +1,6 @@
 {
   "providers": {
-    "tinkoff": ["SBER", "VTBR", "ASTR"]
+    "tinkoff": {"tickers": ["SBER", "VTBR", "ASTR"], "interval": "3m"}
   },
   "bootstrap_servers": "kafka:9092"
 }
