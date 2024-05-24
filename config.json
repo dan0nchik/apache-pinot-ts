@@ -3,5 +3,9 @@
     "tinkoff": {"tickers": ["SBER", "VTBR", "ASTR"], "interval": "1m"},
     "yahoo": {"tickers": ["AAPL", "GOOGL", "TSLA"]}
   },
+  "news":{
+    "fetch_interval": 1,
+    "rss_feeds": ["https://www.vedomosti.ru/rss/rubric/finance"]
+  },
   "bootstrap_servers": "kafka:9092"
 }
