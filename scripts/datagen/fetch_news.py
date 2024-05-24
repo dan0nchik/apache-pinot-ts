@@ -36,9 +36,9 @@ def save_data_as_json(data, filename="./rawdata/news/news_data.json"):
 
 def check_folders():
     if "rawdata" not in os.listdir("."):
-        os.mkdir("rawdata")
+        os.mkdir("./rawdata")
         if "news" not in os.listdir("./rawdata"):
-            os.mkdir("news")
+            os.mkdir("./rawdata/news")
 
 
 def ingestion_job():

@@ -4,7 +4,7 @@
     "yahoo": {"tickers": ["AAPL", "GOOGL", "TSLA"]}
   },
   "news":{
-    "fetch_interval": 1,
+    "fetch_interval": 30,
     "rss_feeds": ["https://www.vedomosti.ru/rss/rubric/finance"]
   },
   "bootstrap_servers": "kafka:9092"
