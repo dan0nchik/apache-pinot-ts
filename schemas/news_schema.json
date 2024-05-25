@@ -1,0 +1,12 @@
+{
+  "schemaName": "news",
+  "dimensionFieldSpecs": [
+    {
+      "name": "entry_json",
+      "dataType": "JSON",
+      "singleValueField": true,
+      "isIndexable": true,
+      "jsonIndex": true
+    }
+  ]
+}

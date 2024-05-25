@@ -1,0 +1,36 @@
+{
+  "tableName": "news",
+  "tableType": "OFFLINE",
+  "segmentsConfig": {
+    "replication": 1,
+    "retentionTimeUnit": "DAYS",
+    "retentionTimeValue": 365
+  },
+  "tenants": {
+    "broker":"DefaultTenant",
+    "server":"DefaultTenant"
+  },
+  "tableIndexConfig": {
+    "loadMode": "MMAP",
+    "jsonIndexColumns": ["entry_json"],
+    "noDictionaryColumns": [
+      "entry_json"
+    ]
+  },
+  "ingestionConfig": {
+    "batchIngestionConfig": {
+      "segmentIngestionType": "REFRESH",
+      "segmentIngestionFrequency": "HOURLY"
+    },
+    "continueOnError": true,
+    "rowTimeValueCheck": true,
+    "segmentTimeValueCheck": false,
+    "transformConfigs": [
+        {
+          "columnName": "entry_json",
+          "transformFunction": "jsonFormat(\"entry\")"
+        }
+      ]
+  },
+  "metadata": {}
+}

@@ -3,3 +3,7 @@ python-dotenv
 tinkoff-investments
 pandas
 aiokafka
+protobuf
+websockets
+feedparser
+schedule
