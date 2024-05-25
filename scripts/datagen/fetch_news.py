@@ -48,6 +48,7 @@ def ingestion_job():
 
 
 schedule.every(interval).minutes.do(ingestion_job)
+ingestion_job()
 
 while True:
     schedule.run_pending()

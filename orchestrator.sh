@@ -2,6 +2,7 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 docker compose up -d --build;
+echo -e "${GREEN}Server is starting...${NC}";
 sleep 60;
 echo -e "${GREEN}Uploading DB schemas...${NC}";
 python3 ./scripts/db/upload_schema.py;

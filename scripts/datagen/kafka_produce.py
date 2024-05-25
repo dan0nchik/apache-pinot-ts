@@ -51,6 +51,7 @@ async def produce_data():
 
         async def fetch_job_yahoo(ticker: str):
             async for value in fetch_yahoo.fetch_ticker([ticker]):
+                print(value)
                 symbol, ts, price, change, day_volume = value
                 message = json.dumps(
                     {
@@ -71,9 +72,10 @@ async def produce_data():
                 except Exception as e:
                     logger.error(f"Failed to deliver message: {message}: {str(e)}")
 
-        tasks = [fetch_job_tinkoff(ticker) for ticker in tickers_tinkoff] + [
-            fetch_job_yahoo(ticker) for ticker in tickers_yahoo
-        ]
+        tasks = [fetch_job_tinkoff(ticker) for ticker in tickers_tinkoff]
+        # + [
+        #    fetch_job_yahoo(ticker) for ticker in tickers_yahoo
+        # ]
         await asyncio.gather(*tasks)
     finally:
         # Ensure all messages are sent before closing

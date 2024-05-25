@@ -7,3 +7,4 @@ protobuf
 websockets
 feedparser
 schedule
+yahoo-fin

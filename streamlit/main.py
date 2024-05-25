@@ -1,78 +1,79 @@
+from datetime import datetime
+import json
+import time
 import streamlit as st
+from connection import fetch_places_data, fetch_news
+import plotly.graph_objects as go
+
 
 # main page
 def main():
-    st.title("Software system for assessing the impact of news on stock prices") 
+    st.title("Software system for assessing the impact of news on stock prices")
 
     st.sidebar.title("Navigation")
-    page = st.sidebar.selectbox("Choose a page", ["News", "Stocks"])
+    page = st.sidebar.selectbox("Choose a page", ["Stocks", "News"])
 
     if page == "News":
         news_page()
     elif page == "Stocks":
         stocks_page()
 
+
 # new
 def news_page():
     st.title("News")
-    news_options = ["Option 1", "Option 2", "Option 3"]
-    selected_news = st.selectbox("Select a news option", news_options)
-    st.write(f"You selected: {selected_news}")
+    fetch_button = st.button("Fetch News")
+    if fetch_button:
+        df = fetch_news()
+        st.dataframe(df, use_container_width=True)
+
 
 # stocks
 def stocks_page():
+    with open("config.json") as f:
+        config = json.load(f)
     st.title("Stocks")
-    stocks_options = ["AAPL", "ASTR", "GOOGL", "SBER", "TSLA", "VTBR"]
+    stock_providers = config["providers"].keys()
+    selected_provider = st.selectbox("Select a provider", stock_providers)
+    stocks_options = config["providers"][selected_provider]["tickers"]
+    columns = config["providers"][selected_provider]["columns"]
     selected_stock = st.selectbox("Select a stock option", stocks_options)
-    
-    if selected_stock == "AAPL":
-        stock_a_page()
-    elif selected_stock == "ASTR":
-        stock_b_page()
-    elif selected_stock == "GOOGL":
-        stock_c_page()
-    elif selected_stock == "SBER":
-        stock_d_page()
-    elif selected_stock == "TSLA":
-        stock_e_page()
-    elif selected_stock == "VTBR":
-        stock_f_page()
 
-def stock_a_page():
-    st.header("AAPL")
-    st.write("Graph")
+    stock_page(selected_stock, columns, selected_provider)
 
-    st.line_chart([1, 3, 2, 4, 5])
 
-def stock_b_page():
-    st.header("ASTR")
-    st.write("Graph")
+def stock_page(stock_name, columns, provider):
+    st.header(stock_name)
+    st.write("Line Chart")
+    line_chart = st.empty()
+    candle_chart = st.empty()
+    while True:
+        df = fetch_places_data(stock_name, columns)
+        with line_chart.container():
+            if provider == "yahoo":
+                st.line_chart(df["price"])
+            if provider == "tinkoff":
+                st.line_chart(df["open"])
+        if provider == "tinkoff":
+            # df["ts"] = df["ts"].apply(lambda x: datetime.fromtimestamp(x / 1e3))
+            with candle_chart.container():
 
-    st.line_chart([1, 3, 2, 4, 5])
+                fig = go.Figure(
+                    data=[
+                        go.Candlestick(
+                            x=df["ts"],
+                            open=df["open"],
+                            high=df["high"],
+                            low=df["low"],
+                            close=df["close"],
+                        )
+                    ]
+                )
+                fig.update_layout(xaxis_rangeslider_visible=False)
+                st.plotly_chart(fig, use_container_width=True)
+        if provider == "yahoo":
+            candle_chart.empty()
 
-def stock_c_page():
-    st.header("GOOGL")
-    st.write("Graph")
-
-    st.line_chart([1, 3, 2, 4, 5])
-
-def stock_d_page():
-    st.header("SBER")
-    st.write("Graph")
-
-    st.line_chart([2, 3, 1, 5, 4])
-
-def stock_e_page():
-    st.header("TSLA")
-    st.write("Graph")
-
-    st.line_chart([1, 3, 2, 4, 5])    
-
-def stock_f_page():
-    st.header("VTBR")
-    st.write("Graph")
-
-    st.line_chart([5, 3, 2, 1, 4])
 
 if __name__ == "__main__":
     main()
