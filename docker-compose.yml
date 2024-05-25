@@ -122,6 +122,18 @@ services:
       - ksqldb-server
     entrypoint: /bin/sh
     tty: true
+  streamlit:
+    container_name: streamlit
+    build: ./streamlit
+    volumes:
+      - .:/app
+    restart: always
+    networks:
+      - pinot
+    depends_on:
+      - datagen
+    ports:
+      - "8051:8051"
 networks:
   pinot:
     name: pinot
