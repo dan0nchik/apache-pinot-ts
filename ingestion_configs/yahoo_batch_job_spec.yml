@@ -1,0 +1,25 @@
+executionFrameworkSpec:
+  name: 'standalone'
+  segmentGenerationJobRunnerClassName: 'org.apache.pinot.plugin.ingestion.batch.standalone.SegmentGenerationJobRunner'
+  segmentTarPushJobRunnerClassName: 'org.apache.pinot.plugin.ingestion.batch.standalone.SegmentTarPushJobRunner'
+  segmentUriPushJobRunnerClassName: 'org.apache.pinot.plugin.ingestion.batch.standalone.SegmentUriPushJobRunner'
+jobType: SegmentCreationAndTarPush
+inputDirURI: '/tmp/pinot/rawdata/yahoo_stocks/_BATCH_TEMPLATE'
+includeFileNamePattern: 'glob:**/*.csv'
+outputDirURI: '/tmp/pinot/segments/'
+overwriteOutput: true
+pushJobSpec:
+  pushFileNamePattern: 'glob:**/*.tar.gz'
+pinotFSSpecs:
+  - scheme: file
+    className: org.apache.pinot.spi.filesystem.LocalPinotFS
+recordReaderSpec:
+  dataFormat: 'csv'
+  className: 'org.apache.pinot.plugin.inputformat.csv.CSVRecordReader'
+  configClassName: 'org.apache.pinot.plugin.inputformat.csv.CSVRecordReaderConfig'
+tableSpec:
+  tableName: '_BATCH_TEMPLATE'
+  schemaURI: 'http://172.17.0.1:9000/tables/news/schema'
+  tableConfigURI: 'http://172.17.0.1:9000/tables/news'
+pinotClusterSpecs:
+  - controllerURI: 'http://172.17.0.1:9000'

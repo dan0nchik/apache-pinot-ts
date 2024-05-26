@@ -61,6 +61,12 @@ services:
       - "9000:9000"
     environment:
       JAVA_OPTS: "-Dplugins.dir=/opt/pinot/plugins -Xms1G -Xmx4G -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -Xloggc:gc-pinot-controller.log"
+    healthcheck:
+      test: curl --fail http://pinot-controller:9000/health || exit 1
+      interval: 20s
+      retries: 5
+      start_period: 10s
+      timeout: 10s
     depends_on:
       - pinot-zookeeper
   pinot-broker:
@@ -98,40 +104,43 @@ services:
     networks:
       - pinot
     depends_on:
-      - kafka
-  ksqldb-server:
-    image: confluentinc/ksqldb-server:0.29.0
-    hostname: ksqldb-server
-    container_name: ksqldb-server
-    networks:
-      - pinot
-    restart: always
-    ports:
-      - "8088:8088"
-    environment:
-      KSQL_LISTENERS: http://0.0.0.0:8088
-      KSQL_BOOTSTRAP_SERVERS: kafka:9092
-      KSQL_KSQL_LOGGING_PROCESSING_STREAM_AUTO_CREATE: "true"
-      KSQL_KSQL_LOGGING_PROCESSING_TOPIC_AUTO_CREATE: "true"
-  ksqldb-cli:
-    image: confluentinc/ksqldb-cli:0.29.0
-    container_name: ksqldb-cli
-    networks:
-      - pinot
-    depends_on:
-      - ksqldb-server
-    entrypoint: /bin/sh
-    tty: true
+      pinot-controller:
+        condition: service_healthy
+  # ksqldb-server:
+  #   image: confluentinc/ksqldb-server:0.29.0
+  #   hostname: ksqldb-server
+  #   container_name: ksqldb-server
+  #   networks:
+  #     - pinot
+  #   restart: always
+  #   ports:
+  #     - "8088:8088"
+  #   environment:
+  #     KSQL_LISTENERS: http://0.0.0.0:8088
+  #     KSQL_BOOTSTRAP_SERVERS: kafka:9092
+  #     KSQL_KSQL_LOGGING_PROCESSING_STREAM_AUTO_CREATE: "true"
+  #     KSQL_KSQL_LOGGING_PROCESSING_TOPIC_AUTO_CREATE: "true"
+  # ksqldb-cli:
+  #   image: confluentinc/ksqldb-cli:0.29.0
+  #   container_name: ksqldb-cli
+  #   networks:
+  #     - pinot
+  #   depends_on:
+  #     - ksqldb-server
+  #   entrypoint: /bin/sh
+  #   tty: true
   streamlit:
     container_name: streamlit
     build: ./streamlit
     restart: always
+    volumes:
+      - .:/app
     networks:
       - pinot
     depends_on:
       - datagen
     ports:
-      - "8051:8051"
+      - "8501:8501"
 networks:
   pinot:
     name: pinot

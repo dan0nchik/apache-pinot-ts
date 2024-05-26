@@ -12,8 +12,8 @@
   },
   "news":
   {
-    "fetch_interval": 30,
     "rss_feeds": ["https://www.vedomosti.ru/rss/rubric/finance"]
   },
+  "batch_ingest_interval": 30,
   "bootstrap_servers": "kafka:9092"
 }

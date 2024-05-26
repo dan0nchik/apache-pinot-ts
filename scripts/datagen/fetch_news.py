@@ -5,10 +5,12 @@ import feedparser
 import schedule
 import time
 
+from fetch_utils import check_folders
+
 with open("config.json") as f:
     config = json.load(f)
 url = config["news"]["rss_feeds"][0]
-interval = config["news"]["fetch_interval"]
+interval = config["batch_ingest_interval"]
 
 
 def save_news_entries(url):
@@ -34,22 +36,7 @@ def save_data_as_json(data, filename="./rawdata/news/news_data.json"):
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 
-def check_folders():
-    if "rawdata" not in os.listdir("."):
-        os.mkdir("./rawdata")
-        if "news" not in os.listdir("./rawdata"):
-            os.mkdir("./rawdata/news")
-
-
-def ingestion_job():
-    check_folders()
+def news_ingestion_job():
+    check_folders("news")
     data = save_news_entries(url)
     save_data_as_json(data)
-
-
-schedule.every(interval).minutes.do(ingestion_job)
-ingestion_job()
-
-while True:
-    schedule.run_pending()
-    time.sleep(1)

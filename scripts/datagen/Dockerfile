@@ -14,4 +14,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD python -u scripts/datagen/kafka_produce.py & python scripts/datagen/fetch_news.py
+CMD python -u scripts/datagen/kafka_produce.py & python scripts/datagen/batch_ingest.py

@@ -44,20 +44,21 @@ def stocks_page():
 
 def stock_page(stock_name, columns, provider):
     st.header(stock_name)
-    st.write("Line Chart")
+    st.write("Realtime Chart")
     line_chart = st.empty()
     candle_chart = st.empty()
     while True:
         df = fetch_places_data(stock_name, columns)
+        # line_chart.empty()
         with line_chart.container():
             if provider == "yahoo":
-                st.line_chart(df["price"])
+                st.line_chart(df, x="ts", y="price")
             if provider == "tinkoff":
-                st.line_chart(df["open"])
+                st.line_chart(df, x="ts", y="open")
         if provider == "tinkoff":
             # df["ts"] = df["ts"].apply(lambda x: datetime.fromtimestamp(x / 1e3))
+            # candle_chart.empty()
             with candle_chart.container():
-
                 fig = go.Figure(
                     data=[
                         go.Candlestick(

@@ -26,6 +26,13 @@ class DateTimeEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, o)
 
 
+def check_folders(folder: str):
+    if "rawdata" not in os.listdir("."):
+        os.mkdir("./rawdata")
+        if "news" not in os.listdir("./rawdata"):
+            os.mkdir(f"./rawdata/{folder}")
+
+
 def quotation_to_float(quotation):
     return quotation.units + quotation.nano / 1_000_000_000
 
