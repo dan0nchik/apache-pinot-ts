@@ -72,9 +72,9 @@ async def produce_data():
                 except Exception as e:
                     logger.error(f"Failed to deliver message: {message}: {str(e)}")
 
-        # yahoo = [fetch_job_yahoo(ticker) for ticker in tickers_yahoo]
+        yahoo = [fetch_job_yahoo(ticker) for ticker in tickers_yahoo]
         tinkoff = [fetch_job_tinkoff(ticker) for ticker in tickers_tinkoff]
-        tasks = tinkoff + []
+        tasks = tinkoff + yahoo
         await asyncio.gather(*tasks)
     finally:
         # Ensure all messages are sent before closing

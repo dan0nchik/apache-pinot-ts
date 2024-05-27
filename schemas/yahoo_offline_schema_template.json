@@ -1,11 +1,5 @@
 {
   "schemaName": "_BATCH_TEMPLATE",
-  "dimensionFieldSpecs": [
-    {
-      "name": "ticker",
-      "dataType": "STRING"
-    }
-  ],
   "metricFieldSpecs": [
     {
       "name": "open",
@@ -29,7 +23,13 @@
     },
     {
       "name": "volume",
-      "dataType": "LONG"
+      "dataType": "DOUBLE"
+    }
+  ],
+  "dimensionFieldSpecs": [
+    {
+      "name": "ticker",
+      "dataType": "STRING"
     }
   ]
 }

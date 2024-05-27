@@ -44,41 +44,31 @@ if time_interval == "1d":
 async def fetch_ticker(TICKER: str):
     LOT, INSTRUMENT_ID = get_figi_by_ticker(TICKER)
 
-    # async def request_iterator():
-    #     yield MarketDataRequest(
-    #         subscribe_candles_request=SubscribeCandlesRequest(
-    #             subscription_action=SubscriptionAction.SUBSCRIPTION_ACTION_SUBSCRIBE,
-    #             instruments=[
-    #                 CandleInstrument(
-    #                     instrument_id=INSTRUMENT_ID,
-    #                     interval=sub,
-    #                 )
-    #             ],
-    #         )
-    #     )
-    #     while True:
-    #         await asyncio.sleep(1)
-
-    # async with AsyncClient(TOKEN) as client:
-    #     async for marketdata in client.market_data_stream.market_data_stream(
-    #         request_iterator()
-    #     ):
-    #         if marketdata.candle is not None:
-    # yield (
-    #     marketdata.candle.time,
-    #     quotation_to_float(marketdata.candle.open),
-    #     quotation_to_float(marketdata.candle.high),
-    #     quotation_to_float(marketdata.candle.low),
-    #     quotation_to_float(marketdata.candle.close),
-    #     marketdata.candle.volume,
-    # )
-    while True:
-        yield (
-            datetime.datetime.now(),
-            random.randint(20, 25),
-            random.randint(90, 100),
-            random.randint(1, 20),
-            random.randint(25, 30),
-            random.randint(50, 100),
+    async def request_iterator():
+        yield MarketDataRequest(
+            subscribe_candles_request=SubscribeCandlesRequest(
+                subscription_action=SubscriptionAction.SUBSCRIPTION_ACTION_SUBSCRIBE,
+                instruments=[
+                    CandleInstrument(
+                        instrument_id=INSTRUMENT_ID,
+                        interval=sub,
+                    )
+                ],
+            )
         )
-        time.sleep(5)
+        while True:
+            await asyncio.sleep(1)
+
+    async with AsyncClient(TOKEN) as client:
+        async for marketdata in client.market_data_stream.market_data_stream(
+            request_iterator()
+        ):
+            if marketdata.candle is not None:
+                yield (
+                    marketdata.candle.time,
+                    quotation_to_float(marketdata.candle.open),
+                    quotation_to_float(marketdata.candle.high),
+                    quotation_to_float(marketdata.candle.low),
+                    quotation_to_float(marketdata.candle.close),
+                    marketdata.candle.volume,
+                )

@@ -25,7 +25,8 @@ def news_page():
     fetch_button = st.button("Fetch News")
     if fetch_button:
         df = fetch_news()
-        st.dataframe(df, use_container_width=True)
+        for index, row in df.iterrows():
+            st.json(row["entry_json"])
 
 
 # stocks
