@@ -44,7 +44,7 @@ def train_and_evaluate(df, steps_ahead):
         )
 
     # Prepare data
-    df["ts"] = pd.to_datetime(df["ts"]).astype(int) / 10**9
+    df["ts"] = pd.to_datetime(df["ts"])
     y = df["close"]
     X = df.drop(["adjclose", "close", "ticker"], axis=1)
 
@@ -63,8 +63,8 @@ def train_and_evaluate(df, steps_ahead):
 
     # Plot the results
     plt.figure(figsize=(10, 5))
-    plt.plot(y_test.index, y_test, label="Actual")
-    plt.plot(y_test.index, y_pred, label="Predicted")
+    plt.plot(df["ts"], df["close"], label="Actual")
+    plt.plot(X_test["ts"], y_pred, label="Predicted")
     plt.legend()
     plt.title("Prediction vs Actual")
     plt.xlabel("Time")
