@@ -6,7 +6,7 @@ executionFrameworkSpec:
 jobType: SegmentCreationAndTarPush
 inputDirURI: '/tmp/pinot/rawdata/yahoo_stocks/_BATCH_TEMPLATE'
 includeFileNamePattern: 'glob:**/*.csv'
-outputDirURI: '/tmp/pinot/segments/'
+outputDirURI: '/tmp/pinot/segments/_BATCH_TEMPLATE'
 overwriteOutput: true
 pushJobSpec:
   pushFileNamePattern: 'glob:**/*.tar.gz'
@@ -19,7 +19,7 @@ recordReaderSpec:
   configClassName: 'org.apache.pinot.plugin.inputformat.csv.CSVRecordReaderConfig'
 tableSpec:
   tableName: '_BATCH_TEMPLATE'
-  schemaURI: 'http://172.17.0.1:9000/tables/news/schema'
-  tableConfigURI: 'http://172.17.0.1:9000/tables/news'
+  schemaURI: 'http://172.17.0.1:9000/tables/_BATCH_TEMPLATE/schema'
+  tableConfigURI: 'http://172.17.0.1:9000/tables/_BATCH_TEMPLATE'
 pinotClusterSpecs:
   - controllerURI: 'http://172.17.0.1:9000'

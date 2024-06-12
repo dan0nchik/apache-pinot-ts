@@ -2,6 +2,7 @@
   "tableName": "_BATCH_TEMPLATE",
   "tableType": "OFFLINE",
   "segmentsConfig": {
+    "timeColumnName": "ts",
     "replication": 1,
     "retentionTimeUnit": "DAYS",
     "retentionTimeValue": 365

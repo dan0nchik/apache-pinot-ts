@@ -30,9 +30,9 @@ def fetch_stock_data(ticker_name):
 
         file_path = os.path.join(base_dir, f"{ticker_name}.csv")
         data.reset_index(names=["ts"], inplace=True)
-        # data["ts"] = pd.to_datetime(data["ts"])
-        # data["ts"] = data["ts"].dt.strftime("%Y-%m-%d %H:%M:%S.%f")
-        data.drop(columns=["ts"], axis=1, inplace=True)
+        data["ts"] = pd.to_datetime(data["ts"])
+        data["ts"] = data["ts"].dt.strftime("%Y-%m-%d %H:%M:%S.%f")
+        # data.drop(columns=["ts"], axis=1, inplace=True)
         data.to_csv(file_path, index=False)
     except Exception as e:
         print(f"Error fetching data for {ticker_name}: {e}")

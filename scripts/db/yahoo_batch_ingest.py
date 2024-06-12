@@ -16,8 +16,20 @@ for provider in config["providers"]:
             list_doc["inputDirURI"] = list_doc["inputDirURI"].replace(
                 "TEMPLATE", ticker
             )
+            list_doc["outputDirURI"] = list_doc["outputDirURI"].replace(
+                "TEMPLATE", ticker
+            )
             list_doc["tableSpec"]["tableName"] = list_doc["tableSpec"][
                 "tableName"
+            ].replace("TEMPLATE", ticker)
+            list_doc["tableSpec"]["schemaURI"] = list_doc["tableSpec"][
+                "schemaURI"
+            ].replace("TEMPLATE", ticker)
+            list_doc["tableSpec"]["tableConfigURI"] = list_doc["tableSpec"][
+                "tableConfigURI"
+            ].replace("TEMPLATE", ticker)
+            list_doc["includeFileNamePattern"] = list_doc[
+                "includeFileNamePattern"
             ].replace("TEMPLATE", ticker)
         with open(tmp_file_path, "w") as f:
             yaml.dump(list_doc, f)
