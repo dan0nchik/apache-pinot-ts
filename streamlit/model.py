@@ -50,7 +50,7 @@ def train_and_evaluate(df, steps_ahead):
     X = df.drop(["adjclose", "close", "ticker"], axis=1)
 
     # Split into training and test sets
-    train_size = int(len(X) * 0.8)
+    train_size = int(len(X) * 0.9)
     X_train, X_test = X.iloc[:train_size], X.iloc[train_size:]
     y_train, y_test = y.iloc[:train_size], y.iloc[train_size:]
     X_train["ts"] = X_train["ts"].astype(int) / 10**9
