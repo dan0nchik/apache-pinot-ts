@@ -18,12 +18,11 @@ def dates(df):
 
 def train_and_evaluate(df, steps_ahead):
     """
-    Trains a CatBoost model to predict the 'open' price and evaluates it on the test set,
-    creating a rolling forecast and returning the plot as a matplotlib.pyplot figure.
+    Trains a CatBoost model to predict the 'open' price and evaluates it once on the test set.
 
     Parameters:
     df (pd.DataFrame): DataFrame containing the columns ['adjclose', 'close', 'high', 'low', 'open', 'ticker', 'ts', 'volume'].
-    steps_ahead (int): The number of steps to forecast ahead.
+    test_size (float): The proportion of the dataset to include in the test split.
 
     Returns:
     tuple: The trained model, the mean squared error on the test set, and the forecast plot as a matplotlib.pyplot figure.
@@ -45,41 +44,31 @@ def train_and_evaluate(df, steps_ahead):
         )
 
     # Prepare data
-    df["ts"] = pd.to_datetime(df["ts"])
+    df["ts"] = pd.to_datetime(df["ts"]).astype(int) / 10**9
     y = df["close"]
     X = df.drop(["adjclose", "close", "ticker"], axis=1)
 
     # Split into training and test sets
-    train_size = int(len(X) * 0.9)
-    X_train, X_test = X.iloc[:train_size], X.iloc[train_size:]
-    y_train, y_test = y.iloc[:train_size], y.iloc[train_size:]
-    X_train["ts"] = X_train["ts"].astype(int) / 10**9
-    X_test["ts"] = X_test["ts"].astype(int) / 10**9
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.3, random_state=42
+    )
+
     # Train the model
     model = CatBoostRegressor(verbose=0)
     model.fit(X_train, y_train)
 
-    # Rolling forecast
-    predictions = []
-    for i in range(len(X_test)):
-        # Update the model to include the most recent observation in the training set
-        model.fit(X.iloc[: train_size + i], y.iloc[: train_size + i], verbose=0)
-        X_test_instance = X_test.iloc[i].to_frame().T
-        X_test_instance["ts"] = (
-            pd.to_datetime(X_test_instance["ts"]).astype(int) / 10**9
-        )
-        y_pred = model.predict(X_test_instance)
-        predictions.append(y_pred[0])
+    # Evaluate the model
+    y_pred = model.predict(X_test)
+    mse = mean_squared_error(y_test, y_pred)
 
-    mse = mean_squared_error(y_test, predictions)
-
-    # Plotting
-    fig, ax = plt.subplots()
-    ax.plot(y_test.index, y_test, label="Actual")
-    ax.plot(y_test.index, predictions, label="Forecast", alpha=0.7)
-    ax.set_title("Rolling Forecast vs Actual")
-    ax.set_xlabel("Index")
-    ax.set_ylabel("Close Price")
-    ax.legend()
+    # Plot the results
+    plt.figure(figsize=(10, 5))
+    plt.plot(y_test.index, y_test, label="Actual")
+    plt.plot(y_test.index, y_pred, label="Predicted")
+    plt.legend()
+    plt.title("Prediction vs Actual")
+    plt.xlabel("Time")
+    plt.ylabel("Close Price")
+    fig = plt.gcf()
 
     return model, mse, fig
