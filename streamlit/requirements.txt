@@ -2,3 +2,5 @@ streamlit
 pinotdb
 pandas
 plotly
+catboost
+scikit-learn

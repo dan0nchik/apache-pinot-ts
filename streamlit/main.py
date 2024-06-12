@@ -1,10 +1,17 @@
 from datetime import datetime
 import json
 import time
+import plotly
 import streamlit as st
-from connection import fetch_places_data, fetch_news
+from connection import fetch_offline_data, fetch_places_data, fetch_news
 import plotly.graph_objects as go
 import plotly.express as px
+
+from model import train_and_evaluate
+
+with open("config.json") as f:
+    config = json.load(f)
+stock_providers = config["providers"].keys()
 
 
 # main page
@@ -12,12 +19,33 @@ def main():
     st.title("Software system for assessing the impact of news on stock prices")
 
     st.sidebar.title("Navigation")
-    page = st.sidebar.selectbox("Choose a page", ["Stocks", "News"])
+    page = st.sidebar.selectbox("Choose a page", ["Stocks", "News", "Forecast"])
 
     if page == "News":
         news_page()
     elif page == "Stocks":
         stocks_page()
+    elif page == "Forecast":
+        forecast_page()
+
+
+# forecast
+def forecast_page():
+    st.title("Forecast")
+    stock_providers = ["yahoo"]
+    selected_provider = st.selectbox("Select a provider", stock_providers)
+    stocks_options = config["providers"][selected_provider]["tickers"]
+    columns = ["adjclose", "close", "high", "low", "open", "ticker", "ts", "volume"]
+    selected_stock = st.selectbox("Select a stock option", stocks_options)
+    df = fetch_offline_data(selected_stock, columns)
+    train_bool = st.button("Train the model!")
+
+    if train_bool:
+        print(df)
+        with st.spinner("Training the model..."):
+            model, mse, fig = train_and_evaluate(df, 30)
+        st.json({"Model": model, "RMSE": mse})
+        st.pyplot(fig)
 
 
 # new
@@ -32,8 +60,6 @@ def news_page():
 
 # stocks
 def stocks_page():
-    with open("config.json") as f:
-        config = json.load(f)
     col1, col2 = st.columns(2)
     with col1:
         st.title("Stocks")

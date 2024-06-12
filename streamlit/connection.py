@@ -22,3 +22,13 @@ def fetch_news():
     data = curs.fetchall()
     df = pd.DataFrame(data, columns=["entry_json"])
     return df
+
+
+def fetch_offline_data(stock_name, columns):
+    query = f"""SELECT * FROM _BATCH_{stock_name} ORDER BY ts ASC;"""
+    curs = conn.cursor()
+    curs.execute(query, queryOptions="useMultistageEngine=true")
+
+    data = curs.fetchall()
+    df = pd.DataFrame(data, columns=columns)
+    return df
