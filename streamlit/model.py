@@ -47,17 +47,20 @@ def train_and_evaluate(df, steps_ahead):
     df.dropna(inplace=True)
     df = df[df["close"] > 0]
     df["ts"] = pd.to_datetime(df["ts"])
+    df["ts"] = df["ts"].dt.strftime("%Y%m%d").astype(int)
     y = df["close"]
     X = df.drop(["adjclose", "close", "ticker"], axis=1)
 
     # Split into training and test sets
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.3, shuffle=False
+        X, y, test_size=0.1, shuffle=False
     )
 
     # Train the model
-    model = CatBoostRegressor(verbose=0)
-    model.fit(X_train, y_train)
+    model = CatBoostRegressor(
+        verbose=0,
+    )
+    model.fit(X_train, y_train, eval_set=(X_test, y_test))
 
     # Evaluate the model
     y_pred = model.predict(X_test)

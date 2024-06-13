@@ -1,7 +1,7 @@
 {
   "providers": {
     "yahoo": {
-      "tickers": ["AAPL", "GOOGL", "TSLA"],
+      "tickers": ["GOOGL","AAPL","TSLA"],
       "columns": ["change", "day_volume", "price", "symbol", "ts", "ts_str"]
     },
     "tinkoff": {
