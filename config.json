@@ -1,11 +1,11 @@
 {
   "providers": {
     "yahoo": {
-      "tickers": ["GOOGL","AAPL","TSLA"],
+      "tickers": ["GOOGL","AAPL","TSLA", "MSFT", "ORCL", "AMZN", "AMD"],
       "columns": ["change", "day_volume", "price", "symbol", "ts", "ts_str"]
     },
     "tinkoff": {
-      "tickers": ["SBER", "VTBR", "ASTR"], 
+      "tickers": ["SBER", "VTBR", "ASTR", "GAZP", "LKOH", "YNDX", "OZON"], 
       "columns": ["close", "high", "low", "open", "symbol", "ts", "ts_str", "volume"],
       "interval": "1m"
     }
