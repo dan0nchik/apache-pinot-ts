@@ -45,6 +45,7 @@ def train_and_evaluate(df, steps_ahead):
 
     # Prepare data
     df.dropna(inplace=True)
+    df = df[df["close"] > 0]
     df["ts"] = pd.to_datetime(df["ts"])
     y = df["close"]
     X = df.drop(["adjclose", "close", "ticker"], axis=1)
