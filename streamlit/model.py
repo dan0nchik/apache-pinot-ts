@@ -61,7 +61,7 @@ def train_and_evaluate(df, steps_ahead):
 
     # Evaluate the model
     y_pred = model.predict(X_test)
-    mse = mean_squared_error(y_test, y_pred)
+    rmse = math.sqrt(mean_squared_error(y_test, y_pred))
 
     # Plot the results
     plt.figure(figsize=(10, 5))
@@ -73,4 +73,4 @@ def train_and_evaluate(df, steps_ahead):
     plt.ylabel("Close Price")
     fig = plt.gcf()
 
-    return model, mse, fig
+    return model, rmse, fig

@@ -16,6 +16,7 @@ from tinkoff.invest import (
     SubscriptionAction,
     SubscriptionInterval,
 )
+from tinkoff.invest.constants import INVEST_GRPC_API
 from fetch_utils import quotation_to_float, get_figi_by_ticker
 
 TOKEN = os.environ["INVEST_TOKEN"]
@@ -51,7 +52,7 @@ async def fetch_ticker(TICKER: str):
                 instruments=[
                     CandleInstrument(
                         instrument_id=INSTRUMENT_ID,
-                        interval=sub,
+                        interval=SubscriptionInterval.SUBSCRIPTION_INTERVAL_ONE_MINUTE,
                     )
                 ],
             )
@@ -64,6 +65,7 @@ async def fetch_ticker(TICKER: str):
             request_iterator()
         ):
             if marketdata.candle is not None:
+                print(marketdata.candle)
                 yield (
                     marketdata.candle.time,
                     quotation_to_float(marketdata.candle.open),

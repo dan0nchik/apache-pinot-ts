@@ -2,6 +2,7 @@ import asyncio
 import configparser
 from datetime import datetime
 import json
+from os import name
 import fetch_tinkoff, fetch_yahoo
 from aiokafka import AIOKafkaProducer
 import logging
@@ -18,7 +19,7 @@ tickers_yahoo = config["providers"]["yahoo"]["tickers"]
 kafka_conf = {"bootstrap_servers": config["bootstrap_servers"]}
 
 
-async def produce_data():
+async def main():
     producer = AIOKafkaProducer(**kafka_conf)
     # Start the producer
     await producer.start()
@@ -81,4 +82,5 @@ async def produce_data():
         await producer.stop()
 
 
-asyncio.run(produce_data())
+if __name__ == "__main__":
+    asyncio.run(main())
