@@ -1,4 +1,4 @@
-# Apache Pinot for Time Series
+# Coursework: Software system for assessing the impact of news on stock prices
 
 ## Docs
 
